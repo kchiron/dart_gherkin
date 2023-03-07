@@ -5,6 +5,7 @@ import 'supporting_files/parameters/power_of_two.parameter.dart';
 import 'supporting_files/steps/given_the_characters.step.dart';
 import 'supporting_files/steps/given_the_numbers.step.dart';
 import 'supporting_files/steps/given_the_powers_of_two.step.dart';
+import 'supporting_files/steps/regex_example_steps.dart';
 import 'supporting_files/steps/then_expect_numeric_result.step.dart';
 import 'supporting_files/steps/when_numbers_are_added.step.dart';
 import 'supporting_files/steps/when_the_characters_are_counted.step.dart';
@@ -19,18 +20,19 @@ Future<void> main() {
     whenTheCharactersAreCounted(),
     thenExpectNumericResult()
   ];
+  steps.addAll(frenchRegexExampleSteps);
 
   final config = TestConfiguration(
-    features: [RegExp(r'features\\.+\.feature')],
+    features: [RegExp(r'features/.+\.feature')],
     reporters: [
-      StdoutReporter(MessageLevel.error),
       ProgressReporter(),
       TestRunSummaryReporter(),
       JsonReporter(),
     ],
-    hooks: [HookExample()],
-    customStepParameterDefinitions: [PowerOfTwoParameter()],
-    createWorld: (config) => Future.value(CalculatorWorld()),
+    tagExpression: "@fr",
+    // hooks: [HookExample()],
+    // customStepParameterDefinitions: [PowerOfTwoParameter()],
+    // createWorld: (config) => Future.value(CalculatorWorld()),
     stepDefinitions: steps,
     stopAfterTestFailed: true,
   );
